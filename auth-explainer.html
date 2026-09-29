@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Authentication Explained — Kirana Store</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#64748b;--line:#e2e8f0;--accent:#176b3a;--warn:#b45309}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.wrap{max-width:1050px;margin:auto;padding:28px 18px 60px}
+.hero{background:linear-gradient(135deg,#176b3a,#2f855a);color:#fff;border-radius:18px;padding:34px 28px;margin-bottom:22px}
+.hero h1{margin:0 0 8px;font-size:34px}.hero p{margin:0;opacity:.94}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:18px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+.card h2{font-size:18px;margin:0 0 10px}.muted{color:var(--muted)}
+.badge{display:inline-block;padding:5px 9px;border-radius:999px;background:#ecfdf3;color:#166534;font-weight:700;font-size:12px}
+.warn{background:#fffbeb;border-color:#fde68a}.warn h2{color:var(--warn)}
+.flow{display:grid;gap:10px;margin-top:14px}
+.step{display:flex;gap:12px;align-items:flex-start;background:#f8fafc;border:1px solid var(--line);padding:14px;border-radius:12px}
+.num{min-width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:700}
+pre{background:#0f172a;color:#e2e8f0;padding:16px;border-radius:12px;overflow:auto}
+code{font-family:Consolas,monospace}
+.footer{margin-top:22px;color:var(--muted);font-size:14px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}.hero h1{font-size:28px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<section class="hero">
+  <span class="badge">Repo: hellohacker143/Kirana-Store-E-Commerce</span>
+  <h1>Authentication & Request Flow</h1>
+  <p>A code-based explanation of what this repository actually implements — and what it does not.</p>
+</section>
+
+<div class="grid">
+  <article class="card">
+    <h2>Components found</h2>
+    <p><b>README.md</b> — describes the Kirana shopping app.</p>
+    <p><b>ecom.html</b> — contains the UI, product data, cart, checkout, order tracking and bill logic.</p>
+  </article>
+  <article class="card">
+    <h2>Authentication code</h2>
+    <p>No login form, password verification, session handling, OAuth flow, JWT creation, or API authentication layer was found in the repository.</p>
+  </article>
+  <article class="card warn">
+    <h2>Credential/token handling</h2>
+    <p>No credentials or access tokens are processed by the current app code. There is no <code>Authorization: Bearer ...</code> flow to trace.</p>
+  </article>
+</div>
+
+<section class="card">
+<h2>Actual request / interaction flow</h2>
+<div class="flow">
+  <div class="step"><div class="num">1</div><div><b>Browser loads ecom.html</b><div class="muted">The page contains its CSS, HTML and JavaScript in one file.</div></div></div>
+  <div class="step"><div class="num">2</div><div><b>Product data is in JavaScript</b><div class="muted">Products are defined in a local <code>products</code> array rather than fetched from an authenticated backend.</div></div></div>
+  <div class="step"><div class="num">3</div><div><b>User interactions update the UI</b><div class="muted">Search, category filters, cart actions, checkout and bill rendering happen in client-side JavaScript.</div></div></div>
+  <div class="step"><div class="num">4</div><div><b>No authenticated server request is shown</b><div class="muted">The checked repository does not contain PHP/API/server authentication endpoints.</div></div></div>
+</div>
+</section>
+
+<section class="card" style="margin-top:18px">
+<h2>Code evidence</h2>
+<p class="muted">The repository's main app starts as a normal HTML document and defines product data directly in JavaScript:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+...
+&lt;script&gt;
+const products = [
+  {
+    id: 1,
+    name: "India Gate Basmati Rice",
+    category: "Grocery",
+    price: 649
+  }
+];
+&lt;/script&gt;</code></pre>
+<p class="muted">The current structure therefore behaves like a client-side demo/storefront rather than an authenticated full-stack application.</p>
+</section>
+
+<section class="card" style="margin-top:18px">
+<h2>What a real authentication flow would look like</h2>
+<div class="flow">
+  <div class="step"><div class="num">1</div><div><b>Login request</b><div class="muted">Browser sends username/email + password to a backend over HTTPS.</div></div></div>
+  <div class="step"><div class="num">2</div><div><b>Credential verification</b><div class="muted">Server checks a password hash; plaintext passwords should not be stored.</div></div></div>
+  <div class="step"><div class="num">3</div><div><b>Session or access token</b><div class="muted">Server returns a secure session cookie or an access token, depending on the architecture.</div></div></div>
+  <div class="step"><div class="num">4</div><div><b>Authenticated API request</b><div class="muted">Subsequent requests carry the session cookie or an authorization token and the server validates it.</div></div></div>
+  <div class="step"><div class="num">5</div><div><b>Logout / expiry</b><div class="muted">Session is invalidated or token expiry forces re-authentication.</div></div></div>
+</div>
+</section>
+
+<section class="card" style="margin-top:18px">
+<h2>Security checklist for adding auth later</h2>
+<p>✓ HTTPS only &nbsp; ✓ password hashing (Argon2id/bcrypt) &nbsp; ✓ server-side authorization checks &nbsp; ✓ secure, HttpOnly cookies for sessions &nbsp; ✓ CSRF protection where applicable &nbsp; ✓ short-lived access tokens if tokens are used &nbsp; ✓ never commit secrets to Git</p>
+</section>
+
+<div class="footer">Generated from the repository contents available through the connected GitHub integration. This page intentionally distinguishes implemented behavior from a hypothetical future authentication design.</div>
+</div>
+</body>
+</html>
