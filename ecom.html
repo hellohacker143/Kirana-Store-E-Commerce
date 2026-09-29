@@ -2,1282 +2,140 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Sai Kirana Store</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0f7a45">
+<title>Sai Kirana — Fresh Groceries Online</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-body{background:#f5f7f4;color:#222}
-button{border:0;cursor:pointer}
-.page{display:none}.page.active{display:block}
-
-.top{
- background:#176b3a;color:#fff;padding:8px 6%;
- display:flex;justify-content:space-between;font-size:13px
-}
-
-header{
- background:#fff;padding:14px 5%;display:flex;align-items:center;
- gap:18px;position:sticky;top:0;z-index:1000;
- box-shadow:0 2px 10px #0001
-}
-
-.logo{font-size:25px;font-weight:900;color:#176b3a;white-space:nowrap}
-.logo span{color:#f59e0b}
-
-.location{
- padding:10px 12px;border:1px solid #ddd;border-radius:7px;
- white-space:nowrap
-}
-
-.search{flex:1;display:flex}
-.search input{
- width:100%;padding:13px;border:1px solid #ddd;
- border-radius:7px 0 0 7px;outline:none
-}
-.search button{
- width:52px;background:#f59e0b;border-radius:0 7px 7px 0
-}
-
-.account{background:white;padding:10px}
-.cart{
- background:#176b3a;color:white;padding:11px 16px;
- border-radius:7px;font-weight:bold
-}
-
-nav{
- background:#fff;padding:12px 5%;display:flex;gap:25px;
- overflow:auto;border-top:1px solid #eee;border-bottom:1px solid #ddd
-}
-nav span{white-space:nowrap;font-weight:bold;font-size:14px;cursor:pointer}
-nav span:hover{color:#176b3a}
-
-.hero{
- margin:20px 5%;height:350px;border-radius:14px;
- padding:45px;color:#fff;display:flex;align-items:center;
- background:
- linear-gradient(90deg,#000b,#0002),
- url("https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1600&q=80");
- background-size:cover;background-position:center
-}
-.hero h1{font-size:45px;max-width:600px}
-.hero p{font-size:18px;margin:15px 0 25px}
-.primary{
- background:#f59e0b;color:#111;padding:13px 22px;
- border-radius:7px;font-weight:bold
-}
-
-.section{padding:25px 5%}
-.heading{
- display:flex;justify-content:space-between;align-items:center;
- margin-bottom:20px
-}
-.heading h2{font-size:25px}
-
-.categories{
- display:grid;grid-template-columns:repeat(8,1fr);gap:14px
-}
-.category{
- background:white;padding:18px 8px;text-align:center;
- border-radius:10px;box-shadow:0 2px 8px #0001;
- cursor:pointer;transition:.2s
-}
-.category:hover{transform:translateY(-4px)}
-.category-icon{font-size:35px;margin-bottom:9px}
-.category p{font-weight:bold;font-size:13px}
-
-.offers{
- display:grid;grid-template-columns:repeat(4,1fr);gap:15px
-}
-.offer{
- background:white;padding:25px;border-radius:10px;
- min-height:145px;box-shadow:0 2px 8px #0001
-}
-.offer b{display:block;color:#176b3a;font-size:21px;margin:10px 0}
-
-.filters{
- display:flex;gap:8px;overflow:auto;margin-bottom:20px
-}
-.filter{
- padding:10px 18px;background:white;border:1px solid #ddd;
- border-radius:20px;white-space:nowrap
-}
-.filter.active{background:#176b3a;color:white}
-
-.products{
- display:grid;grid-template-columns:repeat(5,1fr);gap:17px
-}
-.product{
- background:#fff;border-radius:10px;overflow:hidden;
- position:relative;box-shadow:0 2px 9px #0001
-}
-.product img{width:100%;height:175px;object-fit:cover}
-.heart{
- position:absolute;right:9px;top:9px;width:35px;height:35px;
- border-radius:50%;background:#fff;font-size:19px
-}
-.product-body{padding:13px}
-.product h3{font-size:15px;min-height:38px}
-.unit{font-size:12px;color:#777;margin:6px 0}
-.stars{color:#f59e0b;font-size:13px}
-.price{font-size:19px;font-weight:bold;margin:7px 0}
-.old{text-decoration:line-through;color:#999;font-size:12px;margin-left:5px}
-.save{font-size:12px;color:#16833b;font-weight:bold}
-.add{
- width:100%;margin-top:10px;padding:10px;
- background:#176b3a;color:#fff;border-radius:6px;font-weight:bold
-}
-
-.page-title{
- background:white;padding:30px 5%;border-bottom:1px solid #ddd
-}
-.page-title h1{font-size:32px}
-
-.details{
- background:#fff;padding:45px 8%;
- display:grid;grid-template-columns:1fr 1fr;gap:50px
-}
-.details-img{
- width:100%;height:470px;object-fit:cover;border-radius:12px
-}
-.details-info h1{font-size:35px;margin:15px 0}
-.big-price{font-size:30px;font-weight:bold;color:#176b3a}
-.description{color:#666;line-height:1.7;margin:20px 0}
-.qty{display:flex;align-items:center;gap:14px;margin:20px 0}
-.qty button{width:38px;height:38px;background:#eee;font-size:20px}
-.qty span{font-weight:bold;font-size:18px}
-
-.cart-layout{
- padding:35px 5%;display:grid;
- grid-template-columns:2fr 1fr;gap:25px
-}
-.cart-item{
- background:#fff;padding:15px;border-radius:10px;
- display:flex;align-items:center;gap:15px;margin-bottom:12px
-}
-.cart-item img{
- width:95px;height:95px;object-fit:cover;border-radius:8px
-}
-.cart-info{flex:1}
-.cart-info p{margin-top:6px;color:#555}
-.cart-qty{display:flex;gap:8px;margin-top:9px;align-items:center}
-.cart-qty button{width:29px;height:29px;background:#eee}
-.remove{background:none;color:#e11;font-weight:bold}
-
-.summary{
- background:white;padding:25px;border-radius:10px;height:max-content
-}
-.summary h2{margin-bottom:18px}
-.row{
- display:flex;justify-content:space-between;margin:14px 0
-}
-.total{
- border-top:1px solid #ddd;padding-top:15px;
- font-size:21px;font-weight:bold
-}
-.checkout-btn{
- width:100%;padding:13px;background:#176b3a;
- color:#fff;border-radius:7px;font-weight:bold;margin-top:15px
-}
-
-.checkout{
- padding:35px 5%;display:grid;
- grid-template-columns:1.5fr 1fr;gap:25px
-}
-.box{background:white;padding:25px;border-radius:10px;margin-bottom:20px}
-.box h2{margin-bottom:20px}
-.group{margin-bottom:15px}
-.group label{display:block;font-weight:bold;margin-bottom:6px}
-.group input,.group textarea,.group select{
- width:100%;padding:12px;border:1px solid #ddd;
- border-radius:6px;outline:none
-}
-.group textarea{height:90px;resize:none}
-
-.delivery{
- display:grid;gap:10px
-}
-.delivery label{
- padding:13px;border:1px solid #ddd;border-radius:7px
-}
-
-.payment{display:grid;gap:10px}
-.payment label{
- padding:13px;border:1px solid #ddd;border-radius:7px
-}
-
-.success-page{
- min-height:600px;display:flex;
- align-items:center;justify-content:center;padding:30px
-}
-.success{
- background:#fff;padding:55px;text-align:center;
- border-radius:15px;max-width:550px;
- box-shadow:0 5px 30px #0001
-}
-.success-icon{
- width:85px;height:85px;border-radius:50%;
- background:#dcfce7;color:#15803d;
- display:flex;align-items:center;justify-content:center;
- margin:auto;font-size:45px
-}
-.success h1{margin:20px 0 10px}
-.order-id{
- background:#f3f4f6;padding:15px;
- border-radius:7px;margin:20px 0;font-weight:bold
-}
-
-.track{
- padding:35px 5%;
- max-width:900px;margin:auto
-}
-.track-box{
- background:#fff;padding:30px;border-radius:12px
-}
-.status{
- display:flex;justify-content:space-between;
- margin:35px 0;position:relative
-}
-.status:before{
- content:"";height:4px;background:#ddd;
- position:absolute;left:30px;right:30px;top:18px
-}
-.step{text-align:center;position:relative;z-index:1}
-.circle{
- width:38px;height:38px;border-radius:50%;
- background:#ddd;display:flex;align-items:center;
- justify-content:center;margin:auto auto 8px
-}
-.step.done .circle{background:#176b3a;color:white}
-
-.bill{
- background:white;padding:25px;border-radius:10px;
- max-width:750px;margin:35px auto
-}
-.bill table{width:100%;border-collapse:collapse;margin-top:20px}
-.bill th,.bill td{
- padding:12px;border-bottom:1px solid #ddd;text-align:left
-}
-
-footer{
- background:#1f2937;color:white;padding:40px 5%;margin-top:30px
-}
-.footer-grid{
- display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px
-}
-footer p{color:#bbb;line-height:1.8}
-.copy{border-top:1px solid #444;margin-top:25px;padding-top:18px;color:#aaa}
-
-.toast{
- position:fixed;right:20px;bottom:20px;
- background:#222;color:#fff;padding:14px 20px;
- border-radius:7px;opacity:0;transform:translateY(70px);
- transition:.3s;z-index:5000
-}
-.toast.show{opacity:1;transform:translateY(0)}
-
-@media(max-width:1100px){
- .categories{grid-template-columns:repeat(4,1fr)}
- .products{grid-template-columns:repeat(4,1fr)}
-}
-@media(max-width:800px){
- header{flex-wrap:wrap}
- .location{display:none}
- .search{order:3;flex-basis:100%}
- .categories{grid-template-columns:repeat(3,1fr)}
- .products{grid-template-columns:repeat(2,1fr)}
- .offers{grid-template-columns:repeat(2,1fr)}
- .details,.cart-layout,.checkout{grid-template-columns:1fr}
- .footer-grid{grid-template-columns:1fr 1fr}
-}
-@media(max-width:500px){
- .top{display:none}
- header{padding:12px}
- nav{padding:10px 12px}
- .hero{margin:10px;height:330px;padding:25px}
- .hero h1{font-size:34px}
- .section{padding:20px 12px}
- .categories{grid-template-columns:repeat(2,1fr)}
- .products{grid-template-columns:repeat(2,1fr);gap:10px}
- .product img{height:145px}
- .offers{grid-template-columns:1fr}
- .cart-layout,.checkout{padding:20px 12px}
- .details{padding:20px 12px}
- .details-img{height:330px}
-}
+:root{--green:#0f7a45;--green2:#16a05d;--lime:#e9f8ef;--orange:#ffb11b;--ink:#18221d;--muted:#6b766f;--line:#e7ece9;--card:#fff;--bg:#f7faf8;--red:#ef4444;--shadow:0 10px 35px #12351d12}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--ink)}button,input,textarea,select{font:inherit}button{border:0;cursor:pointer}.page{display:none}.page.active{display:block}
+.top{background:#0b5631;color:#eafff2;padding:8px 5%;display:flex;justify-content:space-between;font-size:12px}
+header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);padding:13px 5%;display:flex;align-items:center;gap:14px}.logo{font-size:25px;font-weight:950;color:var(--green);white-space:nowrap;cursor:pointer}.logo span{color:var(--orange)}
+.location{background:var(--bg);border:1px solid var(--line);padding:11px 13px;border-radius:12px;white-space:nowrap;font-size:13px;font-weight:700}.search{flex:1;display:flex;max-width:700px;margin:auto}.search input{width:100%;border:1px solid var(--line);border-right:0;padding:12px 16px;border-radius:13px 0 0 13px;outline:none;background:#fbfdfc}.search input:focus{border-color:var(--green)}.search button{width:52px;border-radius:0 13px 13px 0;background:var(--orange)}
+.account{background:#f1f5f3;padding:11px 13px;border-radius:12px;font-weight:800}.cart{background:var(--green);color:#fff;padding:11px 15px;border-radius:12px;font-weight:900;box-shadow:0 6px 15px #0f7a4530}
+nav{display:flex;gap:8px;padding:10px 5%;background:#fff;border-bottom:1px solid var(--line);overflow:auto}nav button{background:transparent;padding:8px 12px;border-radius:20px;white-space:nowrap;color:#445149;font-weight:750}nav button:hover,nav button.active{background:var(--lime);color:var(--green)}
+.hero{margin:22px 5%;min-height:370px;border-radius:26px;padding:48px;display:flex;align-items:center;overflow:hidden;position:relative;background:linear-gradient(110deg,#073c25eF,#0f7a4599),url("https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1600&q=85") center/cover;box-shadow:var(--shadow)}.hero:after{content:"🛒";position:absolute;right:7%;bottom:-20px;font-size:150px;opacity:.14}.hero-content{max-width:650px;color:#fff;position:relative;z-index:1}.eyebrow{display:inline-flex;background:#ffffff20;border:1px solid #ffffff35;padding:7px 11px;border-radius:20px;font-size:12px;font-weight:800;margin-bottom:15px}.hero h1{font-size:clamp(34px,5vw,62px);line-height:1.02;letter-spacing:-2px}.hero p{font-size:17px;line-height:1.6;margin:18px 0 25px;color:#effff5}.primary{background:var(--orange);color:#1e1b13;padding:13px 19px;border-radius:12px;font-weight:900;box-shadow:0 8px 20px #0002}.ghost{background:#ffffff18;color:#fff;border:1px solid #ffffff55;padding:12px 18px;border-radius:12px;font-weight:850;margin-left:8px}
+.section{padding:22px 5%}.heading{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:17px}.heading h2{font-size:25px;letter-spacing:-.5px}.heading p{color:var(--muted);font-size:13px;margin-top:4px}.link{background:none;color:var(--green);font-weight:900}
+.categories{display:grid;grid-template-columns:repeat(8,1fr);gap:12px}.category{background:#fff;border:1px solid var(--line);padding:17px 7px;text-align:center;border-radius:17px;box-shadow:0 4px 15px #12351d08;transition:.2s;cursor:pointer}.category:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:#bfe7ce}.category-icon{width:54px;height:54px;margin:auto auto 9px;border-radius:16px;background:var(--lime);display:grid;place-items:center;font-size:28px}.category p{font-size:12px;font-weight:850}
+.offers{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.offer{border-radius:19px;padding:22px;color:#fff;min-height:145px;position:relative;overflow:hidden}.offer:nth-child(1){background:linear-gradient(135deg,#0f7a45,#26ad68)}.offer:nth-child(2){background:linear-gradient(135deg,#e58a00,#ffc13c)}.offer:nth-child(3){background:linear-gradient(135deg,#6750b8,#8e74e9)}.offer:nth-child(4){background:linear-gradient(135deg,#d64e42,#f47a60)}.offer b{display:block;font-size:21px;margin:10px 0}.offer p{opacity:.9;font-size:13px}
+.filters{display:flex;gap:8px;overflow:auto;margin-bottom:18px}.filter{padding:9px 15px;border:1px solid var(--line);background:#fff;border-radius:20px;white-space:nowrap;font-weight:800;color:#53605a}.filter.active{background:var(--green);color:#fff;border-color:var(--green)}
+.products{display:grid;grid-template-columns:repeat(5,1fr);gap:15px}.product{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;position:relative;transition:.2s}.product:hover{transform:translateY(-4px);box-shadow:var(--shadow)}.product img{width:100%;height:170px;object-fit:cover;background:#f1f5f2}.heart{position:absolute;right:10px;top:10px;width:36px;height:36px;border-radius:50%;background:#fff;box-shadow:0 5px 15px #0002;font-size:18px}.badge{position:absolute;left:10px;top:10px;background:#e7f8ed;color:var(--green);padding:5px 8px;border-radius:8px;font-size:10px;font-weight:900}.product-body{padding:13px}.product h3{font-size:14px;line-height:1.35;min-height:38px}.unit{font-size:11px;color:#89938d;margin:5px 0}.stars{color:#f59e0b;font-size:12px}.price{font-size:19px;font-weight:950;margin:6px 0}.old{text-decoration:line-through;color:#9aa39e;font-size:12px;margin-left:5px;font-weight:500}.save{color:#14844a;font-size:11px;font-weight:900}.add{width:100%;margin-top:10px;padding:10px;background:var(--green);color:#fff;border-radius:10px;font-weight:900}.add:hover{background:#0b6137}
+.page-title{padding:30px 5%;background:#fff;border-bottom:1px solid var(--line)}.page-title h1{font-size:34px;letter-spacing:-1px}.page-title p{color:var(--muted);margin-top:5px}
+.details{padding:40px 7%;display:grid;grid-template-columns:1fr 1fr;gap:45px;background:#fff}.details-img{width:100%;height:480px;object-fit:cover;border-radius:22px}.details-info{padding:20px 0}.details-info h1{font-size:38px;line-height:1.1;margin:12px 0}.big-price{font-size:32px;color:var(--green);font-weight:950}.description{color:var(--muted);line-height:1.7;margin:18px 0}.qty{display:flex;align-items:center;gap:12px;margin:22px 0}.qty button,.cart-qty button{width:38px;height:38px;border-radius:10px;background:#eef2ef;font-size:20px}.qty span{font-weight:900}
+.cart-layout,.checkout{padding:35px 5%;display:grid;grid-template-columns:1.8fr 1fr;gap:22px}.cart-item{background:#fff;border:1px solid var(--line);padding:13px;border-radius:16px;display:flex;align-items:center;gap:14px;margin-bottom:11px}.cart-item img{width:85px;height:85px;border-radius:12px;object-fit:cover}.cart-info{flex:1}.cart-info h3{font-size:15px}.cart-info p{color:var(--muted);margin-top:4px}.cart-qty{display:flex;align-items:center;gap:8px;margin-top:8px}.cart-qty button{width:28px;height:28px;font-size:16px}.remove{background:none;color:var(--red);font-weight:900}
+.summary,.box{background:#fff;border:1px solid var(--line);padding:23px;border-radius:18px;height:max-content}.summary h2,.box h2{margin-bottom:18px}.row{display:flex;justify-content:space-between;margin:13px 0;color:#53605a}.total{border-top:1px solid var(--line);padding-top:15px;color:var(--ink);font-size:20px;font-weight:950}.coupon{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;margin-top:12px}.checkout-btn{width:100%;padding:13px;background:var(--green);color:#fff;border-radius:11px;font-weight:900;margin-top:12px}
+.group{margin-bottom:14px}.group label{display:block;font-size:13px;font-weight:850;margin-bottom:6px}.group input,.group textarea,.group select{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;outline:none;background:#fbfdfc}.group textarea{height:90px;resize:none}.delivery,.payment{display:grid;gap:9px}.delivery label,.payment label{padding:12px;border:1px solid var(--line);border-radius:10px;font-weight:650}
+.success-page{min-height:620px;display:grid;place-items:center;padding:30px}.success{text-align:center;background:#fff;border:1px solid var(--line);padding:48px 35px;border-radius:22px;max-width:560px;box-shadow:var(--shadow)}.success-icon{width:80px;height:80px;margin:auto;border-radius:50%;display:grid;place-items:center;background:#dcfce7;color:#15803d;font-size:43px}.success h1{margin:18px 0 8px}.order-id{background:#f2f6f3;padding:14px;border-radius:10px;margin:18px 0;font-weight:900}
+.track{padding:35px 5%;max-width:950px;margin:auto}.track-box{background:#fff;padding:30px;border:1px solid var(--line);border-radius:20px}.status{display:flex;justify-content:space-between;margin:40px 0;position:relative}.status:before{content:"";position:absolute;left:35px;right:35px;top:17px;height:4px;background:#dfe6e1}.step{text-align:center;position:relative;z-index:1;font-size:12px;font-weight:800}.circle{width:36px;height:36px;border-radius:50%;background:#dfe6e1;display:grid;place-items:center;margin:0 auto 8px}.step.done .circle{background:var(--green);color:#fff}
+.bill{background:#fff;border:1px solid var(--line);padding:25px;border-radius:18px;max-width:780px;margin:35px auto}.bill table{width:100%;border-collapse:collapse;margin-top:20px}.bill th,.bill td{padding:11px;border-bottom:1px solid var(--line);text-align:left}
+footer{background:#13251c;color:#fff;padding:40px 5%;margin-top:35px}.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px}.footer-grid p{color:#b7c4bc;line-height:1.8;font-size:13px}.copy{border-top:1px solid #304039;margin-top:25px;padding-top:17px;color:#94a39a;font-size:12px}
+.toast{position:fixed;right:20px;bottom:20px;background:#14231b;color:#fff;padding:13px 17px;border-radius:12px;opacity:0;transform:translateY(20px);transition:.25s;z-index:100}.toast.show{opacity:1;transform:translateY(0)}
+.empty{text-align:center;background:#fff;border:1px dashed #cdd8d1;padding:45px;border-radius:18px;color:var(--muted)}.empty b{display:block;color:var(--ink);font-size:18px;margin-bottom:6px}
+@media(max-width:1100px){.categories{grid-template-columns:repeat(4,1fr)}.products{grid-template-columns:repeat(4,1fr)}}@media(max-width:800px){header{flex-wrap:wrap}.location,.account{display:none}.search{order:3;flex-basis:100%}.categories{grid-template-columns:repeat(4,1fr)}.products{grid-template-columns:repeat(2,1fr)}.offers{grid-template-columns:repeat(2,1fr)}.details,.cart-layout,.checkout{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}.details-img{height:350px}}@media(max-width:520px){.top{display:none}header{padding:11px 12px}.logo{font-size:22px}nav{padding:8px 12px}.hero{margin:12px;min-height:390px;padding:28px;border-radius:20px}.hero h1{letter-spacing:-1px}.hero .ghost{display:none}.section{padding:19px 12px}.categories{grid-template-columns:repeat(2,1fr)}.offers{grid-template-columns:1fr}.product img{height:145px}.page-title{padding:24px 12px}.cart-layout,.checkout,.details{padding:20px 12px}.details-info h1{font-size:30px}.status{gap:5px}.status:before{left:20px;right:20px}.step{font-size:10px}.bill{margin:20px 12px;padding:16px;overflow:auto}}
+@media print{header,nav,footer,.page-title,.bill button{display:none!important}.page{display:none!important}#bill{display:block!important}.bill{border:0;box-shadow:none;margin:0;max-width:none}}
 </style>
 </head>
-
 <body>
-
-<div class="top">
- <span>🚚 Same-day local delivery available</span>
- <span>🏪 Sai Kirana Store • Hyderabad</span>
-</div>
-
+<div class="top"><span>🚚 Same-day delivery in Hyderabad</span><span>Open daily • 7:00 AM – 10:00 PM</span></div>
 <header>
-
- <div class="logo" onclick="showPage('home')">
-   Sai<span>Kirana</span>
- </div>
-
- <div class="location">📍 Hyderabad</div>
-
- <div class="search">
-   <input id="search"
-          placeholder="Search rice, milk, biscuits, oil..."
-          oninput="searchProducts()">
-   <button>🔍</button>
- </div>
-
- <button class="account">👤 Account</button>
-
- <button class="cart" onclick="showPage('cart')">
-   🛒 Cart <span id="cartCount">0</span>
- </button>
-
+  <div class="logo" onclick="showPage('home')">Sai<span>Kirana</span></div>
+  <div class="location">📍 Hyderabad</div>
+  <div class="search"><input id="search" placeholder="Search rice, milk, biscuits, oil..." oninput="searchProducts()"><button onclick="searchProducts()">🔍</button></div>
+  <button class="account">👤 Account</button>
+  <button class="cart" onclick="showPage('cart')">🛒 Cart <span id="cartCount">0</span></button>
 </header>
-
-<nav>
- <span onclick="showPage('home')">Home</span>
- <span onclick="showPage('categories')">Categories</span>
- <span onclick="filterCategory('Grocery')">Grocery</span>
- <span onclick="filterCategory('Dairy')">Dairy</span>
- <span onclick="filterCategory('Food')">Food</span>
- <span onclick="filterCategory('Beverages')">Beverages</span>
- <span onclick="filterCategory('Personal Care')">Personal Care</span>
- <span onclick="filterCategory('Home Care')">Home Care</span>
- <span onclick="filterCategory('Stationery')">Stationery</span>
- <span onclick="showPage('products')">All Products</span>
+<nav id="nav">
+  <button class="active" onclick="showPage('home')">Home</button>
+  <button onclick="showPage('categories')">Categories</button>
+  <button onclick="filterCategory('Grocery')">Grocery</button>
+  <button onclick="filterCategory('Dairy')">Dairy</button>
+  <button onclick="filterCategory('Food')">Food</button>
+  <button onclick="filterCategory('Snacks')">Snacks</button>
+  <button onclick="filterCategory('Beverages')">Beverages</button>
+  <button onclick="filterCategory('Personal Care')">Personal Care</button>
+  <button onclick="filterCategory('Home Care')">Home Care</button>
+  <button onclick="showPage('products')">All Products</button>
 </nav>
 
-
-<!-- HOME -->
-
 <div id="home" class="page active">
-
-<section class="hero">
- <div>
-  <h1>Your Local Kirana Store, Now Online</h1>
-  <p>Fresh groceries, daily essentials and household products delivered to your doorstep.</p>
-  <button class="primary" onclick="showPage('products')">
-    Shop Now →
-  </button>
- </div>
-</section>
-
-
-<section class="section">
-
-<div class="heading">
- <h2>Shop by Category</h2>
- <button onclick="showPage('categories')">View All →</button>
+<section class="hero"><div class="hero-content"><span class="eyebrow">✨ YOUR LOCAL STORE, NOW ONLINE</span><h1>Fresh groceries.<br>Better everyday.</h1><p>Shop trusted daily essentials from Sai Kirana Store and get them delivered to your doorstep.</p><button class="primary" onclick="showPage('products')">Shop Now →</button><button class="ghost" onclick="showPage('categories')">Explore Categories</button></div></section>
+<section class="section"><div class="heading"><div><h2>Shop by category</h2><p>Everything you need for your home</p></div><button class="link" onclick="showPage('categories')">View all →</button></div><div class="categories" id="homeCategories"></div></section>
+<section class="section"><div class="heading"><div><h2>Today's offers</h2><p>Save more on everyday essentials</p></div></div><div class="offers"><div class="offer"><h3>Rice & Atta</h3><b>UP TO 20% OFF</b><p>Premium everyday staples</p></div><div class="offer"><h3>Snacks</h3><b>BUY MORE, SAVE MORE</b><p>Biscuits & namkeen</p></div><div class="offer"><h3>Home Care</h3><b>FROM ₹49</b><p>Cleaning essentials</p></div><div class="offer"><h3>Personal Care</h3><b>UP TO 25% OFF</b><p>Daily care favourites</p></div></div></section>
+<section class="section"><div class="heading"><div><h2>Popular products</h2><p>Customer favourites this week</p></div><button class="link" onclick="showPage('products')">View all →</button></div><div class="products" id="homeProducts"></div></section>
 </div>
 
-<div class="categories">
+<div id="categories" class="page"><div class="page-title"><h1>All Categories</h1><p>Browse our complete collection</p></div><section class="section"><div class="categories" id="allCategories"></div></section></div>
 
- <div class="category" onclick="filterCategory('Grocery')">
-  <div class="category-icon">🍚</div><p>Rice & Dal</p>
- </div>
+<div id="products" class="page"><div class="page-title"><h1>All Products</h1><p>Fresh essentials, simple shopping</p></div><section class="section"><div class="filters" id="filters"></div><div class="products" id="productGrid"></div></section></div>
 
- <div class="category" onclick="filterCategory('Dairy')">
-  <div class="category-icon">🥛</div><p>Milk & Dairy</p>
- </div>
+<div id="details" class="page"><div class="page-title"><h1>Product Details</h1></div><section class="details"><img id="detailImage" class="details-img"><div class="details-info"><div id="detailStars" class="stars"></div><h1 id="detailName"></h1><div class="big-price">₹<span id="detailPrice"></span></div><p id="detailDescription" class="description"></p><p><b>Category:</b> <span id="detailCategory"></span> &nbsp; <b>Pack:</b> <span id="detailUnit"></span></p><div class="qty"><button onclick="changeDetailQty(-1)">−</button><span id="detailQty">1</span><button onclick="changeDetailQty(1)">+</button></div><button class="primary" onclick="addDetailCart()">🛒 Add to Cart</button><button class="primary" onclick="buyNow()" style="margin-left:8px">Buy Now</button></div></section></div>
 
- <div class="category" onclick="filterCategory('Food')">
-  <div class="category-icon">🍪</div><p>Biscuits & Food</p>
- </div>
+<div id="cart" class="page"><div class="page-title"><h1>Your Cart</h1><p>Review your items before checkout</p></div><section class="cart-layout"><div id="cartItems"></div><div class="summary"><h2>Order Summary</h2><div class="row"><span>Subtotal</span><b>₹<span id="subtotal">0</span></b></div><div class="row"><span>Delivery</span><span>₹<span id="delivery">0</span></span></div><div class="row"><span>Discount</span><span>− ₹<span id="discount">0</span></span></div><div class="row total"><span>Total</span><span>₹<span id="total">0</span></span></div><input id="coupon" class="coupon" placeholder="Coupon code (try SAVE50)"><button class="checkout-btn" onclick="applyCoupon()">Apply Coupon</button><button class="checkout-btn" onclick="goCheckout()">Proceed to Checkout →</button></div></section></div>
 
- <div class="category" onclick="filterCategory('Beverages')">
-  <div class="category-icon">🥤</div><p>Beverages</p>
- </div>
+<div id="checkout" class="page"><div class="page-title"><h1>Checkout</h1><p>Almost there — enter your delivery details</p></div><section class="checkout"><div><div class="box"><h2>📍 Delivery Address</h2><div class="group"><label>Full Name</label><input id="customerName" placeholder="Your name"></div><div class="group"><label>Mobile Number</label><input id="customerMobile" placeholder="10 digit mobile number"></div><div class="group"><label>House / Flat / Street</label><textarea id="customerAddress" placeholder="Enter complete address"></textarea></div><div class="group"><label>City</label><input id="customerCity" value="Hyderabad"></div><div class="group"><label>PIN Code</label><input id="customerPin" placeholder="500001"></div></div><div class="box"><h2>🚚 Delivery Slot</h2><div class="delivery"><label><input type="radio" name="slot" value="Today • 5 PM - 7 PM" checked> Today • 5 PM - 7 PM</label><label><input type="radio" name="slot" value="Today • 7 PM - 9 PM"> Today • 7 PM - 9 PM</label><label><input type="radio" name="slot" value="Tomorrow • 9 AM - 12 PM"> Tomorrow • 9 AM - 12 PM</label></div></div><div class="box"><h2>💳 Payment Method</h2><div class="payment"><label><input type="radio" name="payment" value="Cash on Delivery" checked> 💵 Cash on Delivery</label><label><input type="radio" name="payment" value="UPI"> 📱 UPI</label><label><input type="radio" name="payment" value="Card"> 💳 Debit / Credit Card</label></div></div></div><div class="box"><h2>Your Order</h2><div id="checkoutItems"></div><div class="row total"><span>Total</span><span>₹<span id="checkoutTotal">0</span></span></div><button class="checkout-btn" onclick="placeOrder()">Place Order ✓</button></div></section></div>
 
- <div class="category" onclick="filterCategory('Personal Care')">
-  <div class="category-icon">🧴</div><p>Personal Care</p>
- </div>
+<div id="success" class="page"><section class="success-page"><div class="success"><div class="success-icon">✓</div><h1>Order placed!</h1><p>Thanks for shopping with Sai Kirana Store.</p><div class="order-id">Order ID: <span id="orderId"></span></div><p>🚚 Your order is being prepared.</p><br><button class="primary" onclick="showPage('track')">Track Order</button><button class="primary" onclick="showPage('bill')" style="margin-left:8px">View Bill</button></div></section></div>
 
- <div class="category" onclick="filterCategory('Home Care')">
-  <div class="category-icon">🧹</div><p>Home Care</p>
- </div>
+<div id="track" class="page"><div class="page-title"><h1>Track Order</h1></div><section class="track"><div class="track-box"><h2>Order #<span id="trackId">---</span></h2><div class="status"><div class="step done"><div class="circle">✓</div>Placed</div><div class="step done"><div class="circle">✓</div>Confirmed</div><div class="step done"><div class="circle">✓</div>Packed</div><div class="step"><div class="circle">4</div>Out for Delivery</div><div class="step"><div class="circle">5</div>Delivered</div></div><h3>📦 Order Confirmed</h3><p style="margin-top:8px;color:var(--muted)">Your order has been received and is being prepared.</p><br><button class="primary" onclick="showPage('home')">Continue Shopping</button></div></section></div>
 
- <div class="category" onclick="filterCategory('Stationery')">
-  <div class="category-icon">✏️</div><p>Stationery</p>
- </div>
+<div id="bill" class="page"><div class="page-title"><h1>Digital Bill</h1></div><div class="bill"><h2>SAI KIRANA STORE</h2><p>Hyderabad, Telangana</p><hr style="margin:15px 0"><p><b>Order ID:</b> <span id="billId"></span></p><p><b>Date:</b> <span id="billDate"></span></p><table><thead><tr><th>Product</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead><tbody id="billItems"></tbody></table><div class="row total"><span>Total</span><span>₹<span id="billTotal">0</span></span></div><button class="primary" onclick="window.print()">🖨️ Print Bill</button><button class="primary" onclick="sendWhatsApp()" style="margin-left:8px">📱 WhatsApp</button></div></div>
 
- <div class="category" onclick="filterCategory('Kitchen')">
-  <div class="category-icon">🍳</div><p>Kitchen</p>
- </div>
-
-</div>
-</section>
-
-
-<section class="section">
-
-<div class="heading">
- <h2>Today's Offers</h2>
-</div>
-
-<div class="offers">
-
- <div class="offer">
-  <h3>Rice & Atta</h3>
-  <b>UP TO 20% OFF</b>
-  <p>Everyday essentials</p>
- </div>
-
- <div class="offer">
-  <h3>Snacks</h3>
-  <b>BUY MORE SAVE MORE</b>
-  <p>Biscuits & namkeen</p>
- </div>
-
- <div class="offer">
-  <h3>Home Care</h3>
-  <b>FROM ₹49</b>
-  <p>Cleaning products</p>
- </div>
-
- <div class="offer">
-  <h3>Personal Care</h3>
-  <b>UP TO 25% OFF</b>
-  <p>Daily care essentials</p>
- </div>
-
-</div>
-</section>
-
-
-<section class="section">
-
-<div class="heading">
- <h2>Popular Products</h2>
- <button onclick="showPage('products')">View All →</button>
-</div>
-
-<div class="products" id="homeProducts"></div>
-
-</section>
-
-</div>
-
-
-<!-- CATEGORIES -->
-
-<div id="categories" class="page">
-
-<div class="page-title">
- <h1>All Categories</h1>
-</div>
-
-<section class="section">
-
-<div class="categories">
-
- <div class="category" onclick="filterCategory('Grocery')">
-  <div class="category-icon">🍚</div><p>Rice, Atta & Dal</p>
- </div>
-
- <div class="category" onclick="filterCategory('Dairy')">
-  <div class="category-icon">🥛</div><p>Milk & Dairy</p>
- </div>
-
- <div class="category" onclick="filterCategory('Food')">
-  <div class="category-icon">🍪</div><p>Biscuits & Bakery</p>
- </div>
-
- <div class="category" onclick="filterCategory('Snacks')">
-  <div class="category-icon">🍿</div><p>Snacks & Namkeen</p>
- </div>
-
- <div class="category" onclick="filterCategory('Beverages')">
-  <div class="category-icon">🥤</div><p>Beverages</p>
- </div>
-
- <div class="category" onclick="filterCategory('Personal Care')">
-  <div class="category-icon">🧴</div><p>Personal Care</p>
- </div>
-
- <div class="category" onclick="filterCategory('Home Care')">
-  <div class="category-icon">🧼</div><p>Home & Cleaning</p>
- </div>
-
- <div class="category" onclick="filterCategory('Laundry')">
-  <div class="category-icon">🧺</div><p>Laundry</p>
- </div>
-
- <div class="category" onclick="filterCategory('Kitchen')">
-  <div class="category-icon">🍳</div><p>Kitchen</p>
- </div>
-
- <div class="category" onclick="filterCategory('Stationery')">
-  <div class="category-icon">✏️</div><p>Stationery</p>
- </div>
-
-</div>
-
-</section>
-</div>
-
-
-<!-- PRODUCTS -->
-
-<div id="products" class="page">
-
-<div class="page-title">
- <h1>All Products</h1>
- <p>Choose your everyday essentials</p>
-</div>
-
-<section class="section">
-
-<div class="filters">
-
-<button class="filter active" onclick="filterCategory('All')">All</button>
-<button class="filter" onclick="filterCategory('Grocery')">Grocery</button>
-<button class="filter" onclick="filterCategory('Dairy')">Dairy</button>
-<button class="filter" onclick="filterCategory('Food')">Food</button>
-<button class="filter" onclick="filterCategory('Snacks')">Snacks</button>
-<button class="filter" onclick="filterCategory('Beverages')">Beverages</button>
-<button class="filter" onclick="filterCategory('Personal Care')">Personal Care</button>
-<button class="filter" onclick="filterCategory('Home Care')">Home Care</button>
-<button class="filter" onclick="filterCategory('Laundry')">Laundry</button>
-<button class="filter" onclick="filterCategory('Kitchen')">Kitchen</button>
-<button class="filter" onclick="filterCategory('Stationery')">Stationery</button>
-
-</div>
-
-<div class="products" id="productGrid"></div>
-
-</section>
-</div>
-
-
-<!-- DETAILS -->
-
-<div id="details" class="page">
-
-<div class="page-title">
- <h1>Product Details</h1>
-</div>
-
-<section class="details">
-
-<img id="detailImage" class="details-img">
-
-<div class="details-info">
-
-<div id="detailStars" class="stars"></div>
-
-<h1 id="detailName"></h1>
-
-<div class="big-price">
- ₹<span id="detailPrice"></span>
-</div>
-
-<p id="detailDescription" class="description"></p>
-
-<p><b>Category:</b> <span id="detailCategory"></span></p>
-
-<div class="qty">
- <button onclick="changeDetailQty(-1)">−</button>
- <span id="detailQty">1</span>
- <button onclick="changeDetailQty(1)">+</button>
-</div>
-
-<button class="primary" onclick="addDetailCart()">
- 🛒 Add to Cart
-</button>
-
-<button class="primary" onclick="buyNow()" style="margin-left:8px">
- Buy Now
-</button>
-
-</div>
-
-</section>
-</div>
-
-
-<!-- CART -->
-
-<div id="cart" class="page">
-
-<div class="page-title">
- <h1>Shopping Cart</h1>
-</div>
-
-<section class="cart-layout">
-
-<div id="cartItems"></div>
-
-<div class="summary">
-
-<h2>Order Summary</h2>
-
-<div class="row">
- <span>Subtotal</span>
- <span>₹<span id="subtotal">0</span></span>
-</div>
-
-<div class="row">
- <span>Delivery</span>
- <span>₹<span id="delivery">0</span></span>
-</div>
-
-<div class="row">
- <span>Discount</span>
- <span>− ₹<span id="discount">0</span></span>
-</div>
-
-<div class="row total">
- <span>Total</span>
- <span>₹<span id="total">0</span></span>
-</div>
-
-<input id="coupon"
-       placeholder="Coupon code"
-       style="width:100%;padding:12px;border:1px solid #ddd;border-radius:6px;margin-top:15px">
-
-<button class="checkout-btn"
-        onclick="applyCoupon()">
- Apply Coupon
-</button>
-
-<button class="checkout-btn"
-        onclick="goCheckout()">
- Proceed to Checkout
-</button>
-
-</div>
-
-</section>
-</div>
-
-
-<!-- CHECKOUT -->
-
-<div id="checkout" class="page">
-
-<div class="page-title">
- <h1>Checkout</h1>
-</div>
-
-<section class="checkout">
-
-<div>
-
-<div class="box">
-
-<h2>Delivery Address</h2>
-
-<div class="group">
-<label>Full Name</label>
-<input id="customerName" placeholder="Your name">
-</div>
-
-<div class="group">
-<label>Mobile Number</label>
-<input id="customerMobile" placeholder="10 digit mobile number">
-</div>
-
-<div class="group">
-<label>House / Flat / Street</label>
-<textarea id="customerAddress" placeholder="Enter complete address"></textarea>
-</div>
-
-<div class="group">
-<label>City</label>
-<input id="customerCity" value="Hyderabad">
-</div>
-
-<div class="group">
-<label>PIN Code</label>
-<input id="customerPin" placeholder="500001">
-</div>
-
-</div>
-
-
-<div class="box">
-
-<h2>Delivery Slot</h2>
-
-<div class="delivery">
-
-<label>
-<input type="radio" name="slot" checked>
- 🚚 Today • 5 PM - 7 PM
-</label>
-
-<label>
-<input type="radio" name="slot">
- 🚚 Today • 7 PM - 9 PM
-</label>
-
-<label>
-<input type="radio" name="slot">
- 🚚 Tomorrow • 9 AM - 12 PM
-</label>
-
-</div>
-
-</div>
-
-
-<div class="box">
-
-<h2>Payment Method</h2>
-
-<div class="payment">
-
-<label>
-<input type="radio" name="payment" checked>
- 💵 Cash on Delivery
-</label>
-
-<label>
-<input type="radio" name="payment">
- 📱 UPI
-</label>
-
-<label>
-<input type="radio" name="payment">
- 💳 Debit / Credit Card
-</label>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="box">
-
-<h2>Your Order</h2>
-
-<div id="checkoutItems"></div>
-
-<div class="row total">
- <span>Total</span>
- <span>₹<span id="checkoutTotal">0</span></span>
-</div>
-
-<button class="checkout-btn" onclick="placeOrder()">
- Place Order
-</button>
-
-</div>
-
-</section>
-</div>
-
-
-<!-- SUCCESS -->
-
-<div id="success" class="page">
-
-<section class="success-page">
-
-<div class="success">
-
-<div class="success-icon">✓</div>
-
-<h1>Order Placed Successfully!</h1>
-
-<p>
-Thank you for shopping at Sai Kirana Store.
-</p>
-
-<div class="order-id">
-Order ID:
-<span id="orderId"></span>
-</div>
-
-<p>
-🚚 Your order is being prepared.
-</p>
-
-<br>
-
-<button class="primary"
-        onclick="showPage('track')">
- Track Order
-</button>
-
-<button class="primary"
-        onclick="showPage('bill')"
-        style="margin-left:8px">
- View Bill
-</button>
-
-</div>
-
-</section>
-</div>
-
-
-<!-- TRACK ORDER -->
-
-<div id="track" class="page">
-
-<div class="page-title">
-<h1>Track Order</h1>
-</div>
-
-<section class="track">
-
-<div class="track-box">
-
-<h2>Order #<span id="trackId">---</span></h2>
-
-<div class="status">
-
-<div class="step done">
-<div class="circle">✓</div>
-<p>Placed</p>
-</div>
-
-<div class="step done">
-<div class="circle">✓</div>
-<p>Confirmed</p>
-</div>
-
-<div class="step done">
-<div class="circle">✓</div>
-<p>Packed</p>
-</div>
-
-<div class="step">
-<div class="circle">4</div>
-<p>Out for Delivery</p>
-</div>
-
-<div class="step">
-<div class="circle">5</div>
-<p>Delivered</p>
-</div>
-
-</div>
-
-<h3>📦 Order Confirmed</h3>
-<p style="margin-top:8px;color:#666">
-Your Kirana order has been received and is being prepared.
-</p>
-
-<br>
-
-<button class="primary"
-        onclick="showPage('home')">
- Continue Shopping
-</button>
-
-</div>
-
-</section>
-</div>
-
-
-<!-- BILL -->
-
-<div id="bill" class="page">
-
-<div class="page-title">
-<h1>Digital Bill</h1>
-</div>
-
-<div class="bill">
-
-<h2>SAI KIRANA STORE</h2>
-<p>Hyderabad, Telangana</p>
-
-<hr style="margin:15px 0">
-
-<p><b>Order ID:</b> <span id="billId"></span></p>
-<p><b>Date:</b> <span id="billDate"></span></p>
-
-<table>
-
-<thead>
-<tr>
-<th>Product</th>
-<th>Qty</th>
-<th>Price</th>
-</tr>
-</thead>
-
-<tbody id="billItems"></tbody>
-
-</table>
-
-<div class="row total">
-<span>Total</span>
-<span>₹<span id="billTotal">0</span></span>
-</div>
-
-<button class="primary"
-        onclick="window.print()">
- 🖨️ Print Bill
-</button>
-
-<button class="primary"
-        onclick="sendWhatsApp()"
-        style="margin-left:8px">
- 📱 WhatsApp
-</button>
-
-</div>
-</div>
-
-
-<footer>
-
-<div class="footer-grid">
-
-<div>
-<h3>🏪 Sai Kirana Store</h3>
-<p>
-Your trusted local grocery store for everyday
-essentials, groceries and household products.
-</p>
-</div>
-
-<div>
-<h3>Shop</h3>
-<p>Rice & Dal</p>
-<p>Dairy</p>
-<p>Snacks</p>
-<p>Beverages</p>
-</div>
-
-<div>
-<h3>Services</h3>
-<p>Home Delivery</p>
-<p>Digital Bill</p>
-<p>Order Tracking</p>
-<p>WhatsApp Orders</p>
-</div>
-
-<div>
-<h3>Contact</h3>
-<p>📍 Hyderabad</p>
-<p>📞 98765 43210</p>
-<p>🕐 7 AM - 10 PM</p>
-</div>
-
-</div>
-
-<div class="copy">
-© 2026 Sai Kirana Store • All Rights Reserved
-</div>
-
-</footer>
-
-
+<footer><div class="footer-grid"><div><h3>🏪 Sai Kirana Store</h3><p>Your trusted local store for groceries, household products and everyday essentials.</p></div><div><h3>Shop</h3><p>Rice & Dal</p><p>Dairy</p><p>Snacks</p><p>Beverages</p></div><div><h3>Services</h3><p>Home Delivery</p><p>Digital Bill</p><p>Order Tracking</p><p>WhatsApp Orders</p></div><div><h3>Contact</h3><p>📍 Hyderabad</p><p>📞 98765 43210</p><p>🕐 7 AM – 10 PM</p></div></div><div class="copy">© 2026 Sai Kirana Store • All Rights Reserved</div></footer>
 <div id="toast" class="toast"></div>
 
-
 <script>
-
-/* =========================
-   PRODUCT DATABASE
-========================= */
-
-const products = [
-
-{
-id:1,
-name:"India Gate Basmati Rice",
-category:"Grocery",
-unit:"5 kg",
-price:649,
-old:749,
-stars:"★★★★★",
-image:"https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=700&q=80",
-description:"Premium quality basmati rice for everyday cooking."
-},
-
-{
-id:2,
-name:"Aashirvaad Wheat Atta",
-category:"Grocery",
-unit:"5 kg",
-price:299,
-old:349,
-stars:"★★★★★",
-image:"https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=700&q=80",
-description:"Fresh wheat flour for soft rotis and chapatis."
-},
-
-{
-id:3,
-name:"Toor Dal",
-category:"Grocery",
-unit:"1 kg",
-price:159,
-old:190,
-stars:"★★★★☆",
-image:"https://images.unsplash.com/photo-1515543904379-3d757afe72e4?auto=format&fit=crop&w=700&q=80",
-description:"High quality toor dal for everyday meals."
-},
-
-{
-id:4,
-name:"Sugar",
-category:"Grocery",
-unit:"1 kg",
-price:49,
-old:55,
-stars:"★★★★★",
-image:"https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=700&q=80",
-description:"Fine quality sugar for tea, coffee and cooking."
-},
-
-{
-id:5,
-name:"Fortune Sunflower Oil",
-category:"Grocery",
-unit:"1 L",
-price:139,
-old:159,
-stars:"★★★★☆",
-image:"https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=700&q=80",
-description:"Light and versatile cooking oil."
-},
-
-{
-id:6,
-name:"Tata Salt",
-category:"Grocery",
-unit:"1 kg",
-price:28,
-old:32,
-stars:"★★★★★",
-image:"https://images.unsplash.com/photo-1518110925495-5fe2b5c4d9f1?auto=format&fit=crop&w=700&q=80",
-description:"Iodised salt for everyday cooking."
-},
-
-{
-id:7,
-name:"Fresh Milk",
-category:"Dairy",
-unit:"1 L",
-price:62,
-old:68,
-stars:"★★★★★",
-image:"https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&w=700&q=80",
-description:"Fresh dairy milk for your family."
-},
-
-{
-id:8,
-name:"Curd",
-category:"Dairy",
-unit:"500 g",
-price:45,
-old:50,
-stars:"★★★★☆",
-image:"https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=700&q=80",
-description:"Fresh creamy curd."
-},
-
-{
-id:9,
-name:"Butter",
-category:"Dairy",
-unit:"500 g",
-price:275,
-old:310,
-stars:"★★★★★",
-image:"https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?auto=format&fit=crop&w=700&q=80",
-description:"Rich creamy butter."
-},
-
-{
-id:10,
-name:"Cheese Slices",
-category:"Dairy",
-unit:"200 g",
-price:135,
-old:160,
-stars:"★★★★☆",
-image:"https://images.unsplash.com/photo-1452195100486-9cc805987862?auto=format&fit=crop&w=700&q=80",
-description:"Soft cheese slices for sandwiches."
-},
-
-{
-id:11,
-name:"Marie Biscuits",
-category:"Food",
-unit:"250 g",
-price:35,
-old:40,
-stars:"★★★★★",
-image:"https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=700&q=80",
-description:"Light and crispy tea-time biscuits."
-},
-
-{
-id:12,
-name:"Cream Biscuits",
-category:"Food",
-unit:"120 g",
-price:30,
-old:35,
-stars:"★★★★☆",
-image:"https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=700&q=80",
-description:"Delicious cream-filled biscuits."
-},
-
-{
-id:13,
-name:"Potato Chips",
-category:"Snacks",
-unit:"150 g",
-price:50,
-old:60,
-stars:"★★★★★",
-image:"https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&w=700&q=80",
-description:"Crispy potato chips."
-},
-
-{
-id:14,
-name:"Mixture Namkeen",
-category:"Snacks",
-unit:"200 g",
-price:75,
-old:90,
-stars:"★★★★☆",
-image:"https://images.unsplash.com/photo-1621939514649-280e2aa8b3b0?auto=format&fit=crop&w=700&q=80",
-description:"Crunchy traditional namkeen mixture."
-},
-
-{
-id:15,
-name:"Roasted Peanuts",
-category:"Snacks",
-unit:"200 g",
-price:65,
-old:80,
-stars:"★★★★★",
-image:"https://images.unsplash.com/photo-1567892737950-30c2a3f5e0b8?auto=format&fit=crop&w=700&q=80",
-description:"Crunchy roasted peanuts."
-},
-
-{
-id:16,
-name:"Orange Juice",
-category:"Beverages",
-unit:"1 L",
-price:120,
-old:150,
-stars:"★★★★☆",
-image:"https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=700&q=80",
-description:"Refreshing orange juice."
-},
-
-{
-id:17,
-name:"Green Tea",
-category:"Beverages",
-unit:"100 g",
-price:149,
-old:180,
-stars:"★★★★★",
-image:"https://images.unsplash.com/photo-1594631252845-29fc4cc8cde9?auto=format&fit=crop&w=700&q=80",
-description:"Refreshing green tea."
-},
-
-{
-id:18,
-name:"Instant Coffee",
-category:"Beverages",
-unit:"100 g",
-price:189,
-old:220,
-stars:"★★★★★",
-image:"https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=700&q=80",
-description:"Rich instant coffee."
-},
-
-{
-id:19,
-name:"Bath Soap",
-category:"Personal Care",
-unit:"4 × 100 g",
-price:145,
-old:170,
-stars:"★★★★☆",
-image:"https://images.unsplash.com/photo-1607006344380-b6775a0824ce?auto=format&fit=crop&w=700&q=80",
-description:"Fresh fragrance bath soap."
-},
-
-{
-id:20,
-name:"Shampoo",
-category:"Personal Care",
-unit:"650 ml",
-price:249,
-old:299,
-stars:"★★★★★",
-image:"https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?auto=format&fit=crop&w=700&q=80",
-description:"Daily hair care shampoo."
-},
-
-{
-id:21,
-name:"Toothpaste",
-category:"Personal Care",
-unit:"200 g",
-price:110,
-old:135,
-stars:"★★★★★",
-image:"https://images.unsplash.com/photo-1559591937-e3e4c0d5b0a7?auto=format&fit=crop&w=700&q=80",
-description:"Complete oral care toothpaste."
-},
-
-{
-id:22,
-name:"Floor Cleaner",
-category:"Home Care",
-unit:"1 L",
-price:159,
-old:199,
-stars:"★★★★☆",
-image:"https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=700&q=80",
-description:"Effective floor cleaning liquid."
-},
-
-{
-id:23,
-name:"Dishwash Liquid",
-category:"Home Care",
-unit:"500 ml",
-price:99,
-old:125,
-stars:"★★★★★",
-image:"https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=700&q=80",
-description:"Powerful dish cleaning liquid."
-},
-
-{
-id:24,
-name:"Glass Cleaner",
-category:"Home Care",
-unit:"500 ml",
-price:109,
-old:140,
-stars:"★★★★☆",
-image:"https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=700&q=80",
-description:"Streak-free glass cleaner."
-},
-
-{
-id:25,
-name:"Laundry Detergent",
-category:"Laundry",
-unit:"2 kg",
-price:249,
-old:
+const products=[
+{id:1,name:"India Gate Basmati Rice",category:"Grocery",unit:"5 kg",price:649,old:749,stars:"★★★★★",image:"https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=700&q=80",description:"Premium quality basmati rice for everyday cooking."},
+{id:2,name:"Aashirvaad Wheat Atta",category:"Grocery",unit:"5 kg",price:299,old:349,stars:"★★★★★",image:"https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=700&q=80",description:"Fresh wheat flour for soft rotis and chapatis."},
+{id:3,name:"Toor Dal",category:"Grocery",unit:"1 kg",price:159,old:190,stars:"★★★★☆",image:"https://images.unsplash.com/photo-1515543904379-3d757afe72e4?auto=format&fit=crop&w=700&q=80",description:"High quality toor dal for everyday meals."},
+{id:4,name:"Fortune Sunflower Oil",category:"Grocery",unit:"1 L",price:139,old:159,stars:"★★★★☆",image:"https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=700&q=80",description:"Light and versatile cooking oil."},
+{id:5,name:"Tata Salt",category:"Grocery",unit:"1 kg",price:28,old:32,stars:"★★★★★",image:"https://images.unsplash.com/photo-1518110925495-5fe2b5c4d9f1?auto=format&fit=crop&w=700&q=80",description:"Iodised salt for everyday cooking."},
+{id:6,name:"Fresh Milk",category:"Dairy",unit:"1 L",price:62,old:68,stars:"★★★★★",image:"https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&w=700&q=80",description:"Fresh dairy milk for your family."},
+{id:7,name:"Curd",category:"Dairy",unit:"500 g",price:45,old:50,stars:"★★★★☆",image:"https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=700&q=80",description:"Fresh creamy curd."},
+{id:8,name:"Butter",category:"Dairy",unit:"500 g",price:275,old:310,stars:"★★★★★",image:"https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?auto=format&fit=crop&w=700&q=80",description:"Rich creamy butter."},
+{id:9,name:"Marie Biscuits",category:"Food",unit:"250 g",price:35,old:40,stars:"★★★★★",image:"https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=700&q=80",description:"Light and crispy tea-time biscuits."},
+{id:10,name:"Cream Biscuits",category:"Food",unit:"120 g",price:30,old:35,stars:"★★★★☆",image:"https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=700&q=80",description:"Delicious cream-filled biscuits."},
+{id:11,name:"Potato Chips",category:"Snacks",unit:"150 g",price:50,old:60,stars:"★★★★★",image:"https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&w=700&q=80",description:"Crispy potato chips."},
+{id:12,name:"Mixture Namkeen",category:"Snacks",unit:"200 g",price:75,old:90,stars:"★★★★☆",image:"https://images.unsplash.com/photo-1621939514649-280e2aa8b3b0?auto=format&fit=crop&w=700&q=80",description:"Crunchy traditional namkeen mixture."},
+{id:13,name:"Orange Juice",category:"Beverages",unit:"1 L",price:120,old:150,stars:"★★★★☆",image:"https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=700&q=80",description:"Refreshing orange juice."},
+{id:14,name:"Instant Coffee",category:"Beverages",unit:"100 g",price:189,old:220,stars:"★★★★★",image:"https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=700&q=80",description:"Rich instant coffee."},
+{id:15,name:"Bath Soap",category:"Personal Care",unit:"4 × 100 g",price:145,old:170,stars:"★★★★☆",image:"https://images.unsplash.com/photo-1607006344380-b6775a0824ce?auto=format&fit=crop&w=700&q=80",description:"Fresh fragrance bath soap."},
+{id:16,name:"Shampoo",category:"Personal Care",unit:"650 ml",price:249,old:299,stars:"★★★★★",image:"https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?auto=format&fit=crop&w=700&q=80",description:"Daily hair care shampoo."},
+{id:17,name:"Toothpaste",category:"Personal Care",unit:"200 g",price:110,old:135,stars:"★★★★★",image:"https://images.unsplash.com/photo-1559591937-e3e4c0d5b0a7?auto=format&fit=crop&w=700&q=80",description:"Complete oral care toothpaste."},
+{id:18,name:"Floor Cleaner",category:"Home Care",unit:"1 L",price:159,old:199,stars:"★★★★☆",image:"https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=700&q=80",description:"Effective floor cleaning liquid."},
+{id:19,name:"Dishwash Liquid",category:"Home Care",unit:"500 ml",price:99,old:125,stars:"★★★★★",image:"https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=700&q=80",description:"Powerful dish cleaning liquid."},
+{id:20,name:"Laundry Detergent",category:"Home Care",unit:"2 kg",price:249,old:299,stars:"★★★★★",image:"https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=700&q=80",description:"Powerful everyday laundry detergent."}
+];
+const cats=[["Grocery","🍚","Rice, Atta & Dal"],["Dairy","🥛","Milk & Dairy"],["Food","🍪","Biscuits & Food"],["Snacks","🍿","Snacks & Namkeen"],["Beverages","🥤","Beverages"],["Personal Care","🧴","Personal Care"],["Home Care","🧹","Home & Cleaning"],["Kitchen","🍳","Kitchen"],["Stationery","✏️","Stationery"]];
+let cart=JSON.parse(localStorage.getItem("saiCart")||"[]"), current=null, detailQty=1, activeCat="All", discount=0, lastOrder=null;
+const money=n=>Number(n).toLocaleString("en-IN");
+function save(){localStorage.setItem("saiCart",JSON.stringify(cart));updateCount()}
+function updateCount(){document.getElementById("cartCount").textContent=cart.reduce((s,x)=>s+x.qty,0)}
+function toast(t){const e=document.getElementById("toast");e.textContent=t;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),1800)}
+function showPage(id){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});if(id==="cart")renderCart();if(id==="checkout")renderCheckout();if(id==="bill")renderBill()}
+function card(p){const saveAmt=p.old-p.price;return '<article class="product"><span class="badge">SAVE ₹'+saveAmt+'</span><button class="heart" onclick="event.stopPropagation();toast(\'Added to favourites ❤️\')">♡</button><img src="'+p.image+'" alt="'+p.name+'" loading="lazy" onclick="openDetails('+p.id+')"><div class="product-body"><h3>'+p.name+'</h3><div class="unit">'+p.unit+'</div><div class="stars">'+p.stars+'</div><div class="price">₹'+money(p.price)+' <span class="old">₹'+money(p.old)+'</span></div><div class="save">You save ₹'+money(saveAmt)+'</div><button class="add" onclick="addCart('+p.id+')">＋ Add to cart</button></div></article>'}
+function renderCats(id){document.getElementById(id).innerHTML=cats.map(c=>'<div class="category" onclick="filterCategory(\''+c[0]+'\')"><div class="category-icon">'+c[1]+'</div><p>'+c[2]+'</p></div>').join("")}
+function renderProducts(list=products){document.getElementById("productGrid").innerHTML=list.length?list.map(card).join(""):'<div class="empty" style="grid-column:1/-1"><b>No products found</b>Try another search or category.</div>'}
+function renderHome(){document.getElementById("homeProducts").innerHTML=products.slice(0,10).map(card).join("")}
+function renderFilters(){const names=["All",...cats.map(x=>x[0])];document.getElementById("filters").innerHTML=names.map(x=>'<button class="filter '+(x===activeCat?"active":"")+'" onclick="filterCategory(\''+x+'\')">'+x+'</button>').join("")}
+function filterCategory(cat){activeCat=cat;showPage("products");renderFilters();const list=cat==="All"?products:products.filter(p=>p.category===cat);renderProducts(list)}
+function searchProducts(){const q=document.getElementById("search").value.toLowerCase().trim();showPage("products");activeCat="All";renderFilters();renderProducts(products.filter(p=>(p.name+" "+p.category+" "+p.description).toLowerCase().includes(q)))}
+function addCart(id,qty=1){const p=products.find(x=>x.id===id), found=cart.find(x=>x.id===id);if(found)found.qty+=qty;else cart.push({id,qty});save();toast(p.name+" added to cart 🛒")}
+function openDetails(id){current=products.find(x=>x.id===id);detailQty=1;document.getElementById("detailImage").src=current.image;document.getElementById("detailName").textContent=current.name;document.getElementById("detailPrice").textContent=money(current.price);document.getElementById("detailStars").textContent=current.stars;document.getElementById("detailDescription").textContent=current.description;document.getElementById("detailCategory").textContent=current.category;document.getElementById("detailUnit").textContent=current.unit;document.getElementById("detailQty").textContent=1;showPage("details")}
+function changeDetailQty(n){detailQty=Math.max(1,detailQty+n);document.getElementById("detailQty").textContent=detailQty}
+function addDetailCart(){addCart(current.id,detailQty);showPage("cart")}
+function buyNow(){addCart(current.id,detailQty);showPage("checkout")}
+function renderCart(){const box=document.getElementById("cartItems");if(!cart.length){box.innerHTML='<div class="empty"><b>Your cart is empty 🛒</b>Add some fresh essentials to get started.<br><br><button class="primary" onclick="showPage(\'products\')">Shop Products</button></div>';setSummary(0);return}box.innerHTML=cart.map(i=>{const p=products.find(x=>x.id===i.id);return '<div class="cart-item"><img src="'+p.image+'"><div class="cart-info"><h3>'+p.name+'</h3><p>₹'+money(p.price)+' • '+p.unit+'</p><div class="cart-qty"><button onclick="changeCart('+p.id+',-1)">−</button><b>'+i.qty+'</b><button onclick="changeCart('+p.id+',1)">+</button></div></div><b>₹'+money(p.price*i.qty)+'</b><button class="remove" onclick="removeCart('+p.id+')">Remove</button></div>'}).join("");setSummary(cart.reduce((s,i)=>s+products.find(p=>p.id===i.id).price*i.qty,0))}
+function setSummary(sub){const delivery=sub?sub>=499?0:30:0,total=Math.max(0,sub+delivery-discount);document.getElementById("subtotal").textContent=money(sub);document.getElementById("delivery").textContent=money(delivery);document.getElementById("discount").textContent=money(discount);document.getElementById("total").textContent=money(total)}
+function changeCart(id,n){const i=cart.find(x=>x.id===id);if(!i)return;i.qty+=n;if(i.qty<=0)cart=cart.filter(x=>x.id!==id);save();renderCart()}
+function removeCart(id){cart=cart.filter(x=>x.id!==id);save();renderCart();toast("Item removed")}
+function applyCoupon(){const code=document.getElementById("coupon").value.trim().toUpperCase();discount=code==="SAVE50"?50:0;toast(discount?"₹50 coupon applied 🎉":"Coupon not found");renderCart()}
+function goCheckout(){if(!cart.length){toast("Your cart is empty");return}showPage("checkout")}
+function renderCheckout(){const box=document.getElementById("checkoutItems");box.innerHTML=cart.length?cart.map(i=>{const p=products.find(x=>x.id===i.id);return '<div class="row"><span>'+p.name+' × '+i.qty+'</span><b>₹'+money(p.price*i.qty)+'</b></div>'}).join(""):'<p>Cart is empty.</p>';const sub=cart.reduce((s,i)=>s+products.find(p=>p.id===i.id).price*i.qty,0);const delivery=sub>=499?0:30;document.getElementById("checkoutTotal").textContent=money(Math.max(0,sub+delivery-discount))}
+function placeOrder(){if(!cart.length){toast("Your cart is empty");return}const name=document.getElementById("customerName").value.trim(),mobile=document.getElementById("customerMobile").value.trim(),address=document.getElementById("customerAddress").value.trim(),pin=document.getElementById("customerPin").value.trim();if(!name||mobile.length<10||!address||!pin){toast("Please complete delivery details");return}const id="SK"+Date.now().toString().slice(-6);lastOrder={id,name,mobile,address,slot:document.querySelector('input[name="slot"]:checked').value,payment:document.querySelector('input[name="payment"]:checked').value,items:cart.map(x=>({...x})),date:new Date().toLocaleString("en-IN")};localStorage.setItem("saiLastOrder",JSON.stringify(lastOrder));cart=[];discount=0;save();document.getElementById("orderId").textContent=id;document.getElementById("trackId").textContent=id;showPage("success")}
+function loadOrder(){lastOrder=JSON.parse(localStorage.getItem("saiLastOrder")||"null");if(lastOrder){document.getElementById("trackId").textContent=lastOrder.id;document.getElementById("orderId").textContent=lastOrder.id}}
+function renderBill(){const o=lastOrder||JSON.parse(localStorage.getItem("saiLastOrder")||"null");if(!o){document.getElementById("billItems").innerHTML="";return}document.getElementById("billId").textContent=o.id;document.getElementById("billDate").textContent=o.date;let total=0;document.getElementById("billItems").innerHTML=o.items.map(i=>{const p=products.find(x=>x.id===i.id),t=p.price*i.qty;total+=t;return '<tr><td>'+p.name+'</td><td>'+i.qty+'</td><td>₹'+money(p.price)+'</td><td>₹'+money(t)+'</td></tr>'}).join("");document.getElementById("billTotal").textContent=money(total)}
+function sendWhatsApp(){const o=lastOrder;if(!o)return;const text="Sai Kirana Order "+o.id+"%0AName: "+o.name+"%0ATotal bill available on the site.";window.open("https://wa.me/?text="+text,"_blank")}
+renderCats("homeCategories");renderCats("allCategories");renderHome();renderFilters();renderProducts();loadOrder();updateCount();
+</script>
+</body>
+</html>
