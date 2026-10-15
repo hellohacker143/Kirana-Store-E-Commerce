@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sai Kirana Store — Billing</title>
+<style>
+:root{--orange:#f5a623;--ink:#111;--muted:#666;--bg:#f4f5f7}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Arial,sans-serif;color:var(--ink)}
+header{background:var(--orange);padding:18px 16px;color:#111}header h1{margin:0;font-size:clamp(22px,4vw,32px);font-weight:900}header p{margin:5px 0 0;font-size:13px}
+main{max-width:1100px;margin:22px auto;padding:0 14px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+.card{background:#fff;border-radius:12px;padding:18px;box-shadow:0 2px 12px #0000000a}h2{font-size:19px;margin:0 0 14px}
+label{font-size:13px;font-weight:700;display:block;margin-bottom:5px}input,button{font:inherit}input{width:100%;padding:11px;border:1px solid #ccc;border-radius:7px;background:#fff}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{margin-bottom:12px}button{border:0;border-radius:7px;padding:11px 13px;font-weight:700;cursor:pointer}
+.primary{background:#111;color:#fff;width:100%}.orange{background:var(--orange);color:#111}.danger{background:#ffe6e6;color:#a00;padding:7px 10px}.small{font-size:12px;color:var(--muted)}
+.productlist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:14px}.productbtn{background:#fff7e8;border:1px solid #f3d49d;text-align:left;padding:11px;min-width:0}.productbtn strong{display:block;overflow-wrap:anywhere}.productbtn span{font-size:12px;color:#555}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px}.tablewrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px 5px;border-bottom:1px solid #eee;text-align:left;white-space:nowrap}th{font-size:11px;color:#555;text-transform:uppercase}
+.qtyinput{width:58px;padding:7px}.billhead{text-align:center;border-bottom:2px dashed #111;padding-bottom:12px;margin-bottom:10px}.billhead h2{font-family:monospace;font-size:24px;margin:0 0 7px}
+.billmeta{font:12px monospace;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}.billtotal{border-top:2px dashed #111;margin-top:12px;padding-top:10px;font-family:monospace}.totalrow{display:flex;justify-content:space-between;gap:10px;margin:7px 0}.grand{font-size:21px;font-weight:900;margin-top:12px}.billfoot{text-align:center;border-top:2px dashed #111;margin-top:12px;padding-top:10px;font-family:monospace;font-weight:bold}
+.actions{display:flex;gap:8px;margin-top:14px}.actions button{flex:1}.empty{text-align:center;color:#888;padding:22px 5px}#billNo{max-width:100px}
+@media(max-width:760px){main{grid-template-columns:1fr}.productlist{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media print{@page{size:80mm auto;margin:3mm}body{background:#fff;font-family:monospace}header,.no-print,.card.editor{display:none!important}main{display:block;margin:0;padding:0;max-width:none}.card.preview{box-shadow:none;border-radius:0;padding:0}.billhead h2{font-size:17px}.billmeta{font-size:10px}table{font-size:10px}th,td{padding:4px 1px}.billtotal{font-size:11px}.grand{font-size:16px}.billfoot{font-size:10px}}
+</style>
+</head>
+<body>
+<header><h1>SAI KIRANA STORE</h1><p>Simple billing · Add products, rates and quantities · Print thermal receipt</p></header>
+<main>
+<section class="card editor no-print">
+<h2>➕ Add Product</h2>
+<form id="productForm">
+<div class="field"><label for="pname">Product name</label><input id="pname" required placeholder="e.g. Rice 1 kg"></div>
+<div class="formgrid"><div class="field"><label for="prate">Rate (₹)</label><input id="prate" type="number" min="0" step="0.01" required placeholder="0.00"></div><div class="field"><label for="pstock">Opening stock (optional)</label><input id="pstock" type="number" min="0" step="1" placeholder="e.g. 20"></div></div>
+<button class="primary" type="submit">Save Product</button></form>
+<p class="small">20 sample products are included. Products are saved in this browser on this device.</p>
+<div class="row" style="margin-top:22px"><h2 style="margin:0">Products</h2><button id="clearProducts" class="danger" type="button">Delete all</button></div>
+<div id="productList" class="productlist"></div><hr style="border:0;border-top:1px solid #eee;margin:20px 0">
+<h2>🧾 Bill details</h2><div class="formgrid"><div class="field"><label for="billNo">Bill number</label><input id="billNo" value="00123"></div><div class="field"><label for="cashier">Cashier</label><input id="cashier" value="01"></div></div>
+<div class="field"><label for="discount">Discount (₹)</label><input id="discount" type="number" min="0" step="0.01" value="0"></div>
+</section>
+<section class="card preview">
+<div class="billhead"><h2>SAI KIRANA STORE</h2><div style="font-size:12px">--------------------------------</div><div class="billmeta"><span>Bill No: <b id="outBillNo">00123</b></span><span>Date: <b id="outDate"></b></span></div><div class="billmeta" style="margin-top:5px"><span>Time: <b id="outTime"></b></span><span>Cashier: <b id="outCashier">01</b></span></div></div>
+<div class="tablewrap"><table><thead><tr><th>No</th><th>Item Name</th><th>Qty</th><th>Rate</th><th>Amount</th><th class="no-print">Remove</th></tr></thead><tbody id="billRows"><tr><td colspan="6" class="empty">Add products to start a bill.</td></tr></tbody></table></div>
+<div class="billtotal"><div class="totalrow"><span>SUBTOTAL</span><strong id="subtotal">₹0.00</strong></div><div class="totalrow"><span>DISCOUNT</span><strong id="discountOut">₹0.00</strong></div><div class="totalrow"><span>TOTAL ITEMS</span><strong id="itemCount">0</strong></div><div class="totalrow grand"><span>GRAND TOTAL</span><strong id="grandTotal">₹0.00</strong></div></div>
+<div class="billfoot">THANK YOU!<br>VISIT AGAIN<br><br>QUALITY PRODUCTS | BETTER PRICES</div>
+<div class="actions no-print"><button class="orange" id="printBtn" type="button">🖨️ Print Bill</button><button id="newBill" type="button" style="background:#eee">New Bill</button></div>
+<p class="small no-print">For thermal printing, choose your 58 mm or 80 mm receipt printer in the print dialog. Browser/device printer support may vary.</p>
+</section></main>
+<script>
+const $=id=>document.getElementById(id);
+const money=n=>'₹'+Number(n||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
+const defaultProducts=[
+{name:'Biscuits',rate:10,stock:100},{name:'Chips',rate:20,stock:100},{name:'Cool Drink 250 ml',rate:20,stock:100},{name:'Cool Drink 500 ml',rate:40,stock:100},{name:'Water Bottle 1 L',rate:20,stock:100},{name:'Milk 500 ml',rate:30,stock:100},{name:'Curd 500 g',rate:35,stock:100},{name:'Bread',rate:40,stock:50},{name:'Eggs (1 piece)',rate:7,stock:100},{name:'Sugar 1 kg',rate:50,stock:100},{name:'Rice 1 kg',rate:60,stock:100},{name:'Wheat Flour 1 kg',rate:45,stock:100},{name:'Cooking Oil 1 L',rate:150,stock:50},{name:'Salt 1 kg',rate:25,stock:100},{name:'Tea Powder 250 g',rate:100,stock:50},{name:'Coffee Sachet',rate:5,stock:200},{name:'Chocolate',rate:20,stock:100},{name:'Noodles',rate:15,stock:100},{name:'Soap',rate:35,stock:100},{name:'Detergent Powder 500 g',rate:60,stock:50}];
+let products=JSON.parse(localStorage.getItem('saiProducts')||'null');
+if(!Array.isArray(products)){products=defaultProducts;localStorage.setItem('saiProducts',JSON.stringify(products));}
+let cart=[];const today=()=>new Date().toLocaleDateString('en-GB').replaceAll('/','-');
+function saveProducts(){localStorage.setItem('saiProducts',JSON.stringify(products));renderProducts();}
+function renderProducts(){const list=$('productList');list.innerHTML='';if(!products.length){list.innerHTML='<div class="empty" style="grid-column:1/-1">No products yet. Add one above.</div>';return;}products.forEach((p,i)=>{const b=document.createElement('button');b.type='button';b.className='productbtn';b.innerHTML='<strong></strong><span></span>';b.querySelector('strong').textContent=p.name;b.querySelector('span').textContent=money(p.rate)+' · Tap to add';b.onclick=()=>addToCart(i);list.appendChild(b);});}
+$('productForm').addEventListener('submit',e=>{e.preventDefault();const name=$('pname').value.trim(),rate=Number($('prate').value);if(!name||!Number.isFinite(rate)||rate<0)return;const existing=products.find(p=>p.name.toLowerCase()===name.toLowerCase());if(existing)existing.rate=rate;else products.push({name,rate,stock:$('pstock').value===''?null:Number($('pstock').value)});saveProducts();e.target.reset();$('pname').focus();});
+$('clearProducts').onclick=()=>{if(confirm('Delete all saved products?')){products=[];saveProducts();}};
+function addToCart(i){const p=products[i],found=cart.find(x=>x.name===p.name);if(found)found.qty++;else cart.push({name:p.name,rate:Number(p.rate),qty:1});renderBill();}
+function removeItem(i){cart.splice(i,1);renderBill();}
+function renderBill(){const body=$('billRows');body.innerHTML='';if(!cart.length)body.innerHTML='<tr><td colspan="6" class="empty">Add products to start a bill.</td></tr>';cart.forEach((p,i)=>{const tr=document.createElement('tr');tr.innerHTML='<td>'+(i+1)+'</td><td></td><td><input class="qtyinput no-print" type="number" min="1" step="1" value="'+p.qty+'" aria-label="Quantity"></td><td>'+money(p.rate)+'</td><td>'+money(p.rate*p.qty)+'</td><td class="no-print"><button class="danger" type="button">×</button></td>';tr.children[1].textContent=p.name;tr.querySelector('input').onchange=e=>{p.qty=Math.max(1,Math.floor(Number(e.target.value)||1));renderBill();};tr.querySelector('button').onclick=()=>removeItem(i);body.appendChild(tr);});const subtotal=cart.reduce((s,p)=>s+p.rate*p.qty,0);const discount=Math.min(Math.max(0,Number($('discount').value)||0),subtotal);$('subtotal').textContent=money(subtotal);$('discountOut').textContent=money(discount);$('itemCount').textContent=cart.reduce((s,p)=>s+p.qty,0);$('grandTotal').textContent=money(subtotal-discount);$('outBillNo').textContent=$('billNo').value||'—';$('outCashier').textContent=$('cashier').value||'—';const d=new Date();$('outDate').textContent=today();$('outTime').textContent=d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true});}
+$('discount').addEventListener('input',renderBill);$('billNo').addEventListener('input',renderBill);$('cashier').addEventListener('input',renderBill);$('printBtn').onclick=()=>window.print();
+$('newBill').onclick=()=>{if(cart.length&&!confirm('Start a new bill and clear current items?'))return;cart=[];$('discount').value=0;const n=Number($('billNo').value);if(Number.isFinite(n))$('billNo').value=String(n+1).padStart(5,'0');renderBill();};
+renderProducts();renderBill();
+</script></body></html>
